@@ -1,0 +1,27 @@
+<!-- sign-up.component.html -->
+
+<div class="sign-up-container" >
+  <app-loading></app-loading>
+  <h2>Sign Up</h2>
+  <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+    <div *ngIf="signUpForm.get('email')!.hasError('required') && signUpForm.get('email')!.touched">
+      Email is required.
+    </div>
+    <div *ngIf="signUpForm.get('email')!.hasError('email') && signUpForm.get('email')!.touched">
+      Please enter a valid email address.
+    </div>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password">
+    <div *ngIf="signUpForm.get('password')!.hasError('required') && signUpForm.get('password')!.touched">
+      Password is required.
+    </div>
+    <div *ngIf="signUpForm.get('password')!.hasError('minlength') && signUpForm.get('password')!.touched">
+      Password must be at least 6 characters long.
+    </div>
+
+    <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+  </form>
+</div>

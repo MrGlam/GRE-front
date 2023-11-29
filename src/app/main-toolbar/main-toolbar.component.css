@@ -1,0 +1,33 @@
+img {
+    width: 100%;
+    max-width: 210px;
+    height: auto;
+    flex: 2;
+  }
+  
+  .categories-container{
+    flex: 0.8;
+  }
+
+  .main-search{
+    height: 2.2vh;
+    width: 55vw;
+    border-radius: 20px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    font-size: 15px;
+  }
+  .login-button {
+    flex: 1;
+  }
+  .sign-button {
+    flex: 1;
+  }
+  mat-toolbar{
+    display: flex;
+    gap:  1%;
+    
+  }
+  
+  
+  

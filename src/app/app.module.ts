@@ -1,18 +1,31 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ToastModule } from './toast/toast.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
+  
   imports: [
     BrowserModule,
-    AppRoutingModule
+    MainToolbarComponent,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    ToastModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }
