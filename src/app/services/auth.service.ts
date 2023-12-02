@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
 
@@ -11,8 +11,16 @@ import { LoadingService } from './loading.service';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000/auth'; // Replace with your backend authentication API URL
-
+  
   constructor(private http: HttpClient,private loadingService: LoadingService) {}
+
+  private triggerFunctionSubject = new Subject<string>();
+
+  triggerFunction$ = this.triggerFunctionSubject.asObservable();
+
+  triggerFunction(data:string) {
+    this.triggerFunctionSubject.next(data);
+  }
 
   login(email: string, password: string): Observable<any> {
     this.loadingService.showLoading();
@@ -41,9 +49,11 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/register`, signupData).pipe( 
       tap((data) => {
         console.log(data);
+        this.loadingService.hideLoading();
       }),
       catchError((error) => {
         // Handle signup error
+        this.loadingService.hideLoading();
         console.error('Signup error:', error);
         throw error;
       })

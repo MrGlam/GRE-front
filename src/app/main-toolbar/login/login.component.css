@@ -1,38 +1,58 @@
 .login-container {
-    max-width: 300px;
-    margin: auto;
+    width: auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-height: 260px;
   }
 
-  h2 {
-    text-align: center;
-  }
+h2 {
+  text-align: center;
+}
 
-  label {
-    display: block;
-    margin-bottom: 8px;
-  }
+label {
+  display: block;
+  margin-bottom: 8px;
+}
 
-  input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
-    box-sizing: border-box;
-  }
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
 
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  button:hover {
-    background-color: #45a049;
-  }
+button:hover {
+  background-color: #45a049;
+}
+
+.signup-href {
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+button:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+.error-message {
+  color: red;
+}
+mat-spinner {
+  margin: auto;
+  height: 200px;
+  
+}

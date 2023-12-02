@@ -1,12 +1,33 @@
 <div class="login-container">
-    <h2>Login</h2>
-    <form (ngSubmit)="login()">
-      <label for="email">Email:</label>
-      <input type="text" id="email" name="email" required #username>
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required #password>
-
-      <button type="submit">Login</button>
-    </form>
+  <h2>Login</h2>
+  <div class="detailed-error error-message" *ngIf="errorMessage != null">
+    {{ errorMessage }}
   </div>
+  <div *ngIf="(LoadingService.loading$ | async)">
+    <mat-spinner></mat-spinner>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" *ngIf="!(LoadingService.loading$ | async)">
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email">
+    <div class="error-message" *ngIf="loginForm.get('email')!.hasError('required') && loginForm.get('email')!.touched">
+      Email is required.
+    </div>
+    <div class="error-message" *ngIf="loginForm.get('email')!.hasError('email') && loginForm.get('email')!.touched">
+      Please enter a valid email address.
+    </div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password">
+    <div class="error-message" *ngIf="loginForm.get('password')!.hasError('required') && loginForm.get('password')!.touched">
+      Password is required.
+    </div>
+    <div class="error-message" *ngIf="loginForm.get('password')!.hasError('minlength') && loginForm.get('password')!.touched">
+      Password must be at least 6 characters long.
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <div class="signup-href">
+      <span (click)="openSignup()">Don't have an account yet?</span>
+    </div>
+  </form>
+</div>

@@ -1,9 +1,10 @@
 /* toast.component.css */
 .toast {
-    background-color: #007bff;
+    background-color:rgb(190, 189, 189);
     color: #ffffff;
     padding: 15px;
     border-radius: 5px;
+    text-align: center;
     margin: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 300px;
@@ -13,7 +14,4 @@
     font-weight: bold;
   }
   
-  .toast-body {
-    margin-top: 10px;
-  }
   

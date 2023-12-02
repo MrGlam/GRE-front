@@ -16,18 +16,23 @@ img {
     padding: 10px; 
     border: 1px solid #ccc; 
     font-size: 15px;
+    flex:8
   }
   .login-button {
     flex: 1;
+    max-width: 40px;
   }
-  .sign-button {
+  .signup-button {
     flex: 1;
+    max-width: 50px;
   }
   mat-toolbar{
     display: flex;
     gap:  1%;
-    
   }
-  
+  mat-icon{
+    flex: 0.2;
+  }
+
   
   

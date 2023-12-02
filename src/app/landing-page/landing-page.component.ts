@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastService } from '../services/toast.service';
 
 @Component({
@@ -11,9 +10,6 @@ import { ToastService } from '../services/toast.service';
   styleUrl: './landing-page.component.css'
 })
 export class LandingPageComponent {
-  constructor(private toastService: ToastService) {}
+  constructor() {}
 
-  showExampleToast(): void {
-    this.toastService.showToast('This is an example toast from ExampleComponent.');
-  }
 }

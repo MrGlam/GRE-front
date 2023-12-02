@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-up/sign-up.component';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 
 @Component({
@@ -27,11 +29,24 @@ import { SignInComponent } from './sign-up/sign-up.component';
   styleUrl: './main-toolbar.component.css'
 })
 export class MainToolbarComponent {
-  constructor(public dialog: MatDialog) {}
+  private subscription: Subscription;
+
+  constructor(public dialog: MatDialog,public authService:AuthService) {
+    this.subscription = this.authService.triggerFunction$.subscribe((data) => {
+      if (data == "login"){
+        this.openLoginDialog();
+      }else {
+        this.openSignInDialog()
+      }
+      
+    });
+  }
 
   openLoginDialog(): void {
+    console.log('a');
+    
     const dialogRef = this.dialog.open(LoginComponent, {
-      width: '250px',
+      width: '300px',
       // You can customize other dialog options here
     });
 
@@ -43,7 +58,7 @@ export class MainToolbarComponent {
 
   openSignInDialog(): void {
     const dialogRef = this.dialog.open(SignInComponent, {
-      width: '250px',
+      width: '300px',
       // You can customize other dialog options here
     });
 
@@ -52,4 +67,9 @@ export class MainToolbarComponent {
       console.log('The dialog was closed');
     });
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }

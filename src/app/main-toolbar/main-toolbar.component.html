@@ -1,16 +1,16 @@
 <mat-toolbar>
     <img class="logo" src="../../assets/images/logo-5.png" alt="image">
     <div class="categories-container">
-        <button class="menu" mat-button [matMenuTriggerFor]="menu">Categories</button>
-        <mat-menu updatePosition #menu="matMenu" xPosition="before" yPosition="below">
-            <button mat-menu-item>Item 1</button>
+        <button class="menu" mat-button [matMenuTriggerFor]="menu" >Categories</button>
+        <mat-menu updatePosition #menu="matMenu" [xPosition]="'before'" [yPosition]="'above'">
+            <button mat-menu-item >Item 1</button>
             <button mat-menu-item>Item 2</button>
         </mat-menu>
     </div>
     <input matInput class="main-search" placeholder="Search ...">
     <mat-icon>shopping_cart</mat-icon>
     <button class="login-button" mat-raised-button (click)="openLoginDialog()">Log in</button>
-    <button class="sign-button" mat-raised-button (click)="openSignInDialog()">Sign up</button>
+    <button class="signup-button" mat-raised-button (click)="openSignInDialog()">Sign up</button>
 
   </mat-toolbar>
   
