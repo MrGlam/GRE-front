@@ -61,8 +61,6 @@ export class SignInComponent {
         (error) => {
           // Handle login error, e.g., display an error message
           this.errorMessage = error.message
-          console.log(error.message);
-
           console.error('Sign Up error:', error);
         }
       );

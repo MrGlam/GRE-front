@@ -32,9 +32,11 @@ export class AuthService {
         // Handle successful login, e.g., store token in localStorage
         localStorage.setItem('token', response.token);
         localStorage.setItem('tokenExpiration', response.expiresIn);
+        this.loadingService.hideLoading();
       }),
       catchError((error) => {
         // Handle login error
+        this.loadingService.hideLoading();
         console.error('Login error:', error);
         throw error;
       })
