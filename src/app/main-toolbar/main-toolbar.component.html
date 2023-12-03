@@ -8,10 +8,13 @@
         </mat-menu>
     </div>
     <input matInput class="main-search" placeholder="Search ...">
-    <mat-icon>shopping_cart</mat-icon>
+    <mat-icon class="shopping_cart-icon">shopping_cart</mat-icon>
     <div class="auth-container" *ngIf="!(authService.isAuthenticated$ | async)">
         <button class="login-button" mat-raised-button (click)="openLoginDialog()">Log in</button>
         <button class="signup-button" mat-raised-button (click)="openSignInDialog()">Sign up</button>    
+    </div>
+    <div class="user-options-container" *ngIf="(authService.isAuthenticated$ | async)">
+        <mat-icon >settings</mat-icon>
     </div>
     
 

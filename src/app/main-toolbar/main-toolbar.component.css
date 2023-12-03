@@ -19,7 +19,7 @@ img {
     flex:8
   }
 
-  .auth-container{
+  .auth-container,.user-options-container{
     /* max-width: 80px; */
     display: flex;
     gap:  10%;
@@ -36,7 +36,7 @@ img {
     display: flex;
     gap:  1%;
   }
-  mat-icon{
+  .shopping_cart-icon{
     flex: 0.2;
   }
 
