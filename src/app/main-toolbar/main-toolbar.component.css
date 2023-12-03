@@ -18,14 +18,20 @@ img {
     font-size: 15px;
     flex:8
   }
-  .login-button {
+
+  .auth-container{
+    /* max-width: 80px; */
+    display: flex;
+    gap:  10%;
+  }
+  /* .login-button {
     flex: 1;
     max-width: 40px;
   }
   .signup-button {
     flex: 1;
     max-width: 50px;
-  }
+  } */
   mat-toolbar{
     display: flex;
     gap:  1%;

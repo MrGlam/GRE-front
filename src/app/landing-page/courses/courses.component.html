@@ -1,0 +1,12 @@
+<section class="courses" id="courses">
+  <h2>Featured Courses</h2>
+  <div class="course-container">
+    <div *ngFor="let course of courses" class="course-card">
+      <h3>{{ course.title }}</h3>
+      <p>{{ course.description }}</p>
+      <p>Instructor: {{ course.instructor }}</p>
+      <p>Price: ${{ course.price }}</p>
+      <!-- Add a button or link to navigate to the course details page or checkout -->
+    </div>
+  </div>
+</section>

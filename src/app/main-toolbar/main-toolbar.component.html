@@ -9,8 +9,11 @@
     </div>
     <input matInput class="main-search" placeholder="Search ...">
     <mat-icon>shopping_cart</mat-icon>
-    <button class="login-button" mat-raised-button (click)="openLoginDialog()">Log in</button>
-    <button class="signup-button" mat-raised-button (click)="openSignInDialog()">Sign up</button>
+    <div class="auth-container" *ngIf="!(authService.isAuthenticated$ | async)">
+        <button class="login-button" mat-raised-button (click)="openLoginDialog()">Log in</button>
+        <button class="signup-button" mat-raised-button (click)="openSignInDialog()">Sign up</button>    
+    </div>
+    
 
   </mat-toolbar>
   

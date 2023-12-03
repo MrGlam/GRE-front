@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
 
@@ -13,6 +13,15 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/auth'; // Replace with your backend authentication API URL
   
   constructor(private http: HttpClient,private loadingService: LoadingService) {}
+
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+
+  
+  logout() {
+    // Perform logout logic here
+    this.isAuthenticatedSubject.next(false);
+  }
 
   private triggerFunctionSubject = new Subject<string>();
 
@@ -33,6 +42,7 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('tokenExpiration', response.expiresIn);
         this.loadingService.hideLoading();
+        this.isAuthenticatedSubject.next(true);
       }),
       catchError((error) => {
         // Handle login error
