@@ -1,6 +1,7 @@
 // app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guards';
 
 const routes: Routes = [
   // other routes
@@ -12,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [AuthGuard],
     loadChildren: () => 
       import('./admin-landing-page/adminLandingPage.module').then((m) => m.AdminLandingPageModule),
   },

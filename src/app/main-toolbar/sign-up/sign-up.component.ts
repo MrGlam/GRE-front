@@ -49,9 +49,10 @@ export class SignInComponent {
       // Form is valid, proceed with sign-up logic
       const email = this.signUpForm.value.email;
       const password = this.signUpForm.value.password;
+      const fullName = this.signUpForm.value.name
 
 
-      this.authService.signup(email, password).subscribe(
+      this.authService.signup(fullName,email, password).subscribe(
         (data) => {
           // Redirect to a secured route after successful login
           this.dialogRef.close();

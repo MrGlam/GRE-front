@@ -16,7 +16,6 @@ export class ToastComponent implements OnDestroy {
   constructor(private toastService: ToastService) {
     // Subscribe to changes in the toast message
     this.subscription = this.toastService.toastState.subscribe((message) => {
-      console.log('a');
       
       this.message = message;
 

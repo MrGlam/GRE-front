@@ -11,22 +11,34 @@ import { LoadingService } from './loading.service';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000/auth'; // Replace with your backend authentication API URL
-  
-  constructor(private http: HttpClient,private loadingService: LoadingService) {}
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  constructor(
+    private http: HttpClient,
+    private loadingService: LoadingService
+  ) {
+    const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+    this.setAuthenticated(isAuthenticated);
+  }
+  private authenticatedSubject = new BehaviorSubject<boolean>(false);
 
-  
+  get isAuthenticated(): Observable<boolean> {
+    return this.authenticatedSubject.asObservable();
+  }
+
+  setAuthenticated(value: boolean): void {
+    this.authenticatedSubject.next(value);
+    localStorage.setItem('authenticated', value.toString());
+  }
+
   logout() {
-    this.isAuthenticatedSubject.next(false);
+    this.setAuthenticated(false);
   }
 
   private authNavigationSubjectSubject = new Subject<string>();
 
   authNavigationSubject$ = this.authNavigationSubjectSubject.asObservable();
 
-  triggerFunction(data:string) {
+  triggerFunction(data: string) {
     this.authNavigationSubjectSubject.next(data);
   }
 
@@ -41,7 +53,7 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('tokenExpiration', response.expiresIn);
         this.loadingService.hideLoading();
-        this.isAuthenticatedSubject.next(true);
+        this.setAuthenticated(true);
       }),
       catchError((error) => {
         // Handle login error
@@ -52,12 +64,12 @@ export class AuthService {
     );
   }
 
-  signup(email: string, password: string): Observable<any> {
+  signup(fullName: string, email: string, password: string): Observable<any> {
     this.loadingService.showLoading();
 
-    const signupData = { email, password };
+    const signupData = { fullName, email, password };
 
-    return this.http.post<any>(`${this.apiUrl}/register`, signupData).pipe( 
+    return this.http.post<any>(`${this.apiUrl}/register`, signupData).pipe(
       tap((data) => {
         console.log(data);
         this.loadingService.hideLoading();
@@ -67,6 +79,26 @@ export class AuthService {
         this.loadingService.hideLoading();
         console.error('Signup error:', error);
         throw error;
+      })
+    );
+  }
+
+  isAdmain() {
+    console.log('enter is admin func');
+    
+    return this.http.get<any>(`${this.apiUrl}/check-admin`).pipe(
+      
+      tap((data) => {
+
+        console.log(data);
+        this.loadingService.hideLoading();
+        return true
+      }),
+      catchError((error):any => {
+        // Handle signup error
+        this.loadingService.hideLoading();
+        console.log(error);
+        return false
       })
     );
   }

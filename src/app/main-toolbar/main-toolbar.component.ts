@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { SignInComponent } from './sign-up/sign-up.component';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,7 +32,7 @@ import { AuthService } from '../services/auth.service';
 export class MainToolbarComponent {
   private subscription: Subscription;
 
-  constructor(public dialog: MatDialog,public authService:AuthService) {
+  constructor(public dialog: MatDialog,public authService:AuthService,private router:Router) {
     this.subscription = this.authService.authNavigationSubject$.subscribe((data:any) => {
       if (data == "login"){
         this.openLoginDialog();
@@ -41,9 +42,12 @@ export class MainToolbarComponent {
       
     });
   }
+  logout(){
+    this.authService.logout()
+    this.router.navigate(['/']);
+  }
 
   openLoginDialog(): void {
-    console.log('a');
     
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '300px',
