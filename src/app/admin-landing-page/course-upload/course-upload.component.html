@@ -1,0 +1,41 @@
+<!-- admin-course-upload.component.html -->
+<div>
+  <h2>Upload New Course</h2>
+  <form (submit)="uploadCourse()" enctype="multipart/form-data">
+    <label for="title">Title:</label>
+    <input type="text" id="title" [(ngModel)]="course.title" name="title" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" [(ngModel)]="course.description" name="description" required></textarea>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" [(ngModel)]="course.price" name="price" required>
+
+    <div *ngFor="let subject of course.subjects; let i = index">
+      <hr>
+      <h3>Subject {{ i + 1 }}</h3>
+      <label for="subjectTitle">Subject Title:</label>
+      <input type="text" id="subjectTitle" [(ngModel)]="subject.title" name="subjectTitle" required>
+
+      <div *ngFor="let video of subject.videos; let j = index">
+        <hr>
+        <h4>Video {{ j + 1 }}</h4>
+        <label for="videoTitle">Video Title:</label>
+        <input type="text" id="videoTitle" [(ngModel)]="video.title" name="videoTitle" required>
+
+        <label for="videoOrder">Video Order:</label>
+        <input type="number" id="videoOrder" [(ngModel)]="video.order" name="videoOrder" required>
+
+        <!-- File input for video upload -->
+        <label for="videoFile">Upload Video:</label>
+        <input type="file" id="videoFile" (change)="onVideoFileChange($event, i, j)" accept="video/*" required>
+      </div>
+
+      <button type="button" (click)="addVideo(i)">Add Video</button>
+    </div>
+
+    <button type="button" (click)="addSubject()">Add Subject</button>
+
+    <button type="submit">Upload Course</button>
+  </form>
+</div>

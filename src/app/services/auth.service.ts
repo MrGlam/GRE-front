@@ -19,16 +19,15 @@ export class AuthService {
 
   
   logout() {
-    // Perform logout logic here
     this.isAuthenticatedSubject.next(false);
   }
 
-  private triggerFunctionSubject = new Subject<string>();
+  private authNavigationSubjectSubject = new Subject<string>();
 
-  triggerFunction$ = this.triggerFunctionSubject.asObservable();
+  authNavigationSubject$ = this.authNavigationSubjectSubject.asObservable();
 
   triggerFunction(data:string) {
-    this.triggerFunctionSubject.next(data);
+    this.authNavigationSubjectSubject.next(data);
   }
 
   login(email: string, password: string): Observable<any> {

@@ -32,7 +32,7 @@ export class MainToolbarComponent {
   private subscription: Subscription;
 
   constructor(public dialog: MatDialog,public authService:AuthService) {
-    this.subscription = this.authService.triggerFunction$.subscribe((data) => {
+    this.subscription = this.authService.authNavigationSubject$.subscribe((data:any) => {
       if (data == "login"){
         this.openLoginDialog();
       }else {

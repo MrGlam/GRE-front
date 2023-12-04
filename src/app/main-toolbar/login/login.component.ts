@@ -35,12 +35,16 @@ export class LoginComponent {
     this.authService.triggerFunction("signUp")
   }
   login(): void {
+    
     this.errorMessage = null
 
     this.authService.login(this.email, this.password).subscribe(
-      () => {
+      (userData) => {
         // Redirect to a secured route after successful login
-        this.router.navigate(['/dashboard']);
+        const userRole = userData.role
+        if (userRole === 'admin') {
+          this.router.navigate(['/admin']);
+        }
       },
       (error) => {
         // Handle login error, e.g., display an error message
