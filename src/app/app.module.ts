@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ToastModule } from './toast/toast.module';
-import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,15 @@ import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-pa
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    ToastModule
+    ToastModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
+      },
+    }),
+
   ],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

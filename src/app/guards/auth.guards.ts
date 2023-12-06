@@ -1,28 +1,22 @@
 // auth.guard.ts
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { CanActivate, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private jwtHelper: JwtHelperService, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    this.authService.isAdmain().subscribe(resp => {
-      console.log(resp);
-      if (resp) {
-        return true;
-      } else {
-        // Redirect to a different route or show an unauthorized message
-        return this.router.createUrlTree(['/unauthorized']);
-      }
-    })
-    return false
+  canActivate(): boolean {
+    const token = localStorage.getItem('token');
+
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 }

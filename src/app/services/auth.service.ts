@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +15,7 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000/auth'; // Replace with your backend authentication API URL
 
   constructor(
+    private jwtHelper: JwtHelperService,
     private http: HttpClient,
     private loadingService: LoadingService
   ) {
@@ -30,7 +33,10 @@ export class AuthService {
     localStorage.setItem('authenticated', value.toString());
   }
 
+  
+
   logout() {
+    localStorage.removeItem('token');
     this.setAuthenticated(false);
   }
 
@@ -50,6 +56,9 @@ export class AuthService {
     return this.http.post<any>(`${this.apiUrl}/login`, loginData).pipe(
       tap((response) => {
         // Handle successful login, e.g., store token in localStorage
+        let decodedToken = this.jwtHelper.decodeToken(response.token);
+        console.log(decodedToken);
+        
         localStorage.setItem('token', response.token);
         localStorage.setItem('tokenExpiration', response.expiresIn);
         this.loadingService.hideLoading();
@@ -83,24 +92,16 @@ export class AuthService {
     );
   }
 
-  isAdmain() {
-    console.log('enter is admin func');
-    
-    return this.http.get<any>(`${this.apiUrl}/check-admin`).pipe(
+  
+  isAdmin(): boolean {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log(decodedToken.role);
       
-      tap((data) => {
-
-        console.log(data);
-        this.loadingService.hideLoading();
-        return true
-      }),
-      catchError((error):any => {
-        // Handle signup error
-        this.loadingService.hideLoading();
-        console.log(error);
-        return false
-      })
-    );
+      return decodedToken && decodedToken.role === 'admin';
+    }
+    return false;
   }
 
   // Add other authentication-related methods as needed
