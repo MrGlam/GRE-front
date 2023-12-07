@@ -33,7 +33,9 @@ export class AuthService {
     localStorage.setItem('authenticated', value.toString());
   }
 
-  
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 
   logout() {
     localStorage.removeItem('token');
@@ -57,8 +59,6 @@ export class AuthService {
       tap((response) => {
         // Handle successful login, e.g., store token in localStorage
         let decodedToken = this.jwtHelper.decodeToken(response.token);
-        console.log(decodedToken);
-        
         localStorage.setItem('token', response.token);
         this.loadingService.hideLoading();
         this.setAuthenticated(true);
