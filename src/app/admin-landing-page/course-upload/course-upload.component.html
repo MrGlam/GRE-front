@@ -1,41 +1,43 @@
 <!-- admin-course-upload.component.html -->
-<div>
+<div class="container">
   <h2>Upload New Course</h2>
-  <form (submit)="uploadCourse()" enctype="multipart/form-data">
-    <label for="title">Title:</label>
-    <input type="text" id="title" [(ngModel)]="course.title" name="title" required>
+  <form (submit)="uploadCourse()" enctype="multipart/form-data" class="form-group">
+    <label for="title" class="form-label">Title:</label>
+    <input type="text" id="title" [(ngModel)]="course.title" name="title" required class="form-control">
 
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="course.description" name="description" required></textarea>
+    <label for="description" class="form-label">Description:</label>
+    <textarea id="description" [(ngModel)]="course.description" name="description" required class="form-control"></textarea>
 
-    <label for="price">Price:</label>
-    <input type="number" id="price" [(ngModel)]="course.price" name="price" required>
+    <label for="price" class="form-label">Price:</label>
+    <input type="number" id="price" [(ngModel)]="course.price" name="price" required class="form-control">
 
-    <div *ngFor="let subject of course.subjects; let i = index">
+    <div *ngFor="let subject of course.subjects; let i = index" class="subject-group">
       <hr>
       <h3>Subject {{ i + 1 }}</h3>
-      <label for="subjectTitle">Subject Title:</label>
-      <input type="text" id="subjectTitle" [(ngModel)]="subject.title" name="subjectTitle" required>
+      <label for="subjectTitle" class="form-label">Subject Title:</label>
+      <input type="text" id="subjectTitle" [(ngModel)]="subject.title" name="subjectTitle" required class="form-control">
 
-      <div *ngFor="let video of subject.videos; let j = index">
+      <div *ngFor="let video of subject.videos; let j = index" class="video-group">
         <hr>
         <h4>Video {{ j + 1 }}</h4>
-        <label for="videoTitle">Video Title:</label>
-        <input type="text" id="videoTitle" [(ngModel)]="video.title" name="videoTitle" required>
+        <label for="videoTitle" class="form-label">Video Title:</label>
+        <input type="text" id="videoTitle" [(ngModel)]="video.title" name="videoTitle" required class="form-control">
 
-        <label for="videoOrder">Video Order:</label>
-        <input type="number" id="videoOrder" [(ngModel)]="video.order" name="videoOrder" required>
+        <label for="videoOrder" class="form-label">Video Order:</label>
+        <input type="number" id="videoOrder" [(ngModel)]="video.order" name="videoOrder" required class="form-control">
 
         <!-- File input for video upload -->
-        <label for="videoFile">Upload Video:</label>
+        <label for="videoFile" class="form-label">Upload Video:</label>
         <input type="file" id="videoFile" (change)="onVideoFileChange($event, i, j)" accept="video/*" required>
+
+        <button type="button" (click)="removeVideo(i, j)" class="video-button">Remove Video</button>
       </div>
 
-      <button type="button" (click)="addVideo(i)">Add Video</button>
+      <button type="button" (click)="addVideo(i)" class="video-button">Add Video</button>
     </div>
 
-    <button type="button" (click)="addSubject()">Add Subject</button>
+    <button type="button" (click)="addSubject()" class="video-button">Add Subject</button>
 
-    <button type="submit">Upload Course</button>
+    <button type="submit" class="submit-button">Upload Course</button>
   </form>
 </div>

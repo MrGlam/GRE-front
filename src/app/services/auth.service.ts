@@ -60,7 +60,6 @@ export class AuthService {
         console.log(decodedToken);
         
         localStorage.setItem('token', response.token);
-        localStorage.setItem('tokenExpiration', response.expiresIn);
         this.loadingService.hideLoading();
         this.setAuthenticated(true);
       }),
@@ -80,7 +79,6 @@ export class AuthService {
 
     return this.http.post<any>(`${this.apiUrl}/register`, signupData).pipe(
       tap((data) => {
-        console.log(data);
         this.loadingService.hideLoading();
       }),
       catchError((error) => {

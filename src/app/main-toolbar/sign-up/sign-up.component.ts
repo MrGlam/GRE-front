@@ -50,14 +50,16 @@ export class SignInComponent {
       const email = this.signUpForm.value.email;
       const password = this.signUpForm.value.password;
       const fullName = this.signUpForm.value.name
-
+      
 
       this.authService.signup(fullName,email, password).subscribe(
         (data) => {
           // Redirect to a secured route after successful login
-          this.dialogRef.close();
+          console.log(data);
+          
           this.toastService.showToast(data.message);
-
+          this.dialogRef.close();
+          
         },
         (error) => {
           // Handle login error, e.g., display an error message

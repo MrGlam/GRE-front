@@ -1,56 +1,38 @@
 // course.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
-  private apiUrl = 'http://your-backend-api-url'; // Replace with your actual API URL
+  private baseUrl = 'http://localhost:3000/api/courses';
 
-  constructor(private http: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-  uploadCourse(course: any): Observable<any> {
-    const formData: FormData = new FormData();
-
-    formData.append('title', course.title);
-    formData.append('description', course.description);
-    formData.append('price', course.price.toString());
-
-    // Loop through subjects and videos to append data
-    for (const subject of course.subjects) {
-      formData.append('subjects[]', JSON.stringify(subject));
-
-      for (const video of subject.videos) {
-        if (video.file) {
-          formData.append('videos', video.file, video.file.name);
-        }
-      }
-    }
-
-    return this.http.post(`${this.apiUrl}/courses`, formData);
+  getAllCourses(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}`);
   }
 
-  // Add other methods for fetching, updating, or deleting courses as needed
-
-  // Example: Get list of all courses
-  getAllCourses(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/courses`);
-  }
-
-  // Example: Get details of a specific course
   getCourseById(courseId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/courses/${courseId}`);
+    return this.httpClient.get<any>(`${this.baseUrl}/${courseId}`);
   }
 
-  // Example: Update an existing course
-  updateCourse(courseId: string, updatedCourse: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/courses/${courseId}`, updatedCourse);
+  enrollUserInCourse(courseId: string): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/${courseId}/enroll`, {});
   }
 
-  // Example: Delete a course
+  createCourse(courseData: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/create`, courseData);
+  }
+
+  updateCourse(courseId: string, courseData: any): Observable<any> {
+    return this.httpClient.put<any>(`${this.baseUrl}/${courseId}`, courseData);
+  }
+
   deleteCourse(courseId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/courses/${courseId}`);
+    return this.httpClient.delete<any>(`${this.baseUrl}/${courseId}`);
   }
 }

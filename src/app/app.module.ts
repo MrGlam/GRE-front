@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ToastModule } from './toast/toast.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { AdminLandingPageModule } from './admin-landing-page/adminLandingPage.module';
 
 @NgModule({
   declarations: [
